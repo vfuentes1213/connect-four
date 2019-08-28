@@ -1,4 +1,15 @@
 import * as actionTypes from '../actions';
+import GridCell from '../../models/GridCell';
+
+const board = [];
+
+for (let i = 0; i < 6; i++) {
+  const row = [];
+  for (let j = 0; j < 7; j++) {
+    row.push(new GridCell(null, i, j));
+  }
+  board.push(row);
+}
 
 const initialState = {
   currentPlayer: 'playerOne',
@@ -6,14 +17,7 @@ const initialState = {
   playerTwo: { color: 'black' },
   gameState: 'start',
   winner: null,
-  board: [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0]
-  ],
+  board,
   round: 0
 };
 
@@ -24,12 +28,18 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_CHIP:
       console.log(state.round);
-      // copy over current board & set new val for grid cell
-      const newBoard = state.board.slice(0);
-      const newVal = state[state.currentPlayer].color === 'black' ? 1 : 2;
 
-      // update board with current players chip color
-      newBoard[action.payload.rowIndex][action.payload.colIndex] = newVal;
+      // copy over current board & set new val for grid cell
+      const newBoard = state.board.map((row) => {
+        const newRow = row.map((cell) => {
+          return { ...cell };
+        });
+        return newRow;
+      });
+
+      // update grid cell with current players chip color
+      newBoard[action.payload.rowIndex][action.payload.colIndex].color =
+        state[state.currentPlayer].color;
 
       // update current player
       const currentPlayer =
@@ -39,6 +49,7 @@ const reducer = (state = initialState, action) => {
       let { gameState } = { ...state };
       let { winner } = { ...state };
       round++;
+
       if (round >= 8) {
         gameState = 'end';
         winner = 'black';

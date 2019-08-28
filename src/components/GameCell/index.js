@@ -1,21 +1,18 @@
 import React from 'react';
 
-const gameCell = (props) => {
+const gameCell = ({ cell, addChip }) => {
   let style;
-
-  if (props.type === 1) {
+  console.log(cell);
+  if (cell.color === 'black') {
     style = 'GameCell__item--black';
-  } else if (props.type === 2) {
+  } else if (cell.color === 'red') {
     style = 'GameCell__item--red';
   } else {
     style = 'GameCell__item';
   }
 
   return (
-    <div
-      className={['GameCell col', style].join(' ')}
-      onClick={props.addChip}
-    ></div>
+    <div className={['GameCell col', style].join(' ')} onClick={addChip}></div>
   );
 };
 

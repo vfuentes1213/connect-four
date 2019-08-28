@@ -14,7 +14,7 @@ class GameScreen extends Component {
           <GameCell
             key={rowIndex + ' ' + colIndex}
             addChip={() => this.props.onAddChip(rowIndex, colIndex)}
-            type={cell}
+            cell={cell}
           />
         );
       });
