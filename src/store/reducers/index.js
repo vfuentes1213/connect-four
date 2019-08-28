@@ -36,7 +36,8 @@ const reducer = (state = initialState, action) => {
       // check if game has been won or if there is a draw
 
       return { ...state, board: newBoard, currentPlayer };
-    case actionTypes.PLAYER_ONE_CHOOSE_COLOR:
+    case actionTypes.START_GAME:
+      console.log(action.payload);
       return { ...state };
     default:
       return state;

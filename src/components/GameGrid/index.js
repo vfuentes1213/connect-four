@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import GameHeader from '../../components/GameHeader';
 import * as actionTypes from '../../store/actions';
 import GameCell from '../GameCell';
-
+import Modal from '../Modal';
 class GameGrid extends Component {
   render() {
     const gameCellRows = this.props.board.map((row, rowIndex) => {
@@ -26,6 +26,23 @@ class GameGrid extends Component {
 
     return (
       <div className='GameGrid'>
+        <Modal
+          message='Player 1 - Please choose your color:'
+          show={this.props.gameState === 'start' ? true : false}
+        >
+          <button
+            className='btn btn-danger'
+            onClick={() => this.props.onStartGame('red')}
+          >
+            red
+          </button>
+          <button
+            className='btn btn-dark'
+            onClick={() => this.props.onStartGame('black')}
+          >
+            black
+          </button>
+        </Modal>
         <GameHeader currentPlayer={this.props.currentPlayerColor} />
         <div className='container'>{gameCellRows}</div>
       </div>
@@ -36,14 +53,17 @@ class GameGrid extends Component {
 const mapStateToProps = (state) => {
   return {
     board: state.board,
-    currentPlayerColor: state[state.currentPlayer].color
+    currentPlayerColor: state[state.currentPlayer].color,
+    gameState: state.gameState
   };
 };
 
 const mapDispathToProps = (dispatch) => {
   return {
     onAddChip: (rowIndex, colIndex) =>
-      dispatch({ type: actionTypes.ADD_CHIP, payload: { rowIndex, colIndex } })
+      dispatch({ type: actionTypes.ADD_CHIP, payload: { rowIndex, colIndex } }),
+    onStartGame: (color) =>
+      dispatch({ type: actionTypes.START_GAME, payload: { color } })
   };
 };
 
