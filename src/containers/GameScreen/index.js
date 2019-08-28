@@ -45,7 +45,18 @@ class GameScreen extends Component {
             black
           </button>
         </Modal>
-        <GameHeader currentPlayer={this.props.currentPlayerColor} />
+        <Modal
+          message={this.props.winner + ' wins!'}
+          show={this.props.gameState === 'end' ? true : false}
+        >
+          <button className='btn btn-danger' onClick={this.props.onNewGame}>
+            New Game
+          </button>
+        </Modal>
+        <GameHeader
+          currentPlayer={this.props.currentPlayerColor}
+          round={this.props.round}
+        />
         <GameGrid gameCellRows={gameCellRows} />
       </div>
     );
@@ -56,7 +67,9 @@ const mapStateToProps = (state) => {
   return {
     board: state.board,
     currentPlayerColor: state[state.currentPlayer].color,
-    gameState: state.gameState
+    gameState: state.gameState,
+    round: state.round,
+    winner: state.winner
   };
 };
 
@@ -65,7 +78,8 @@ const mapDispathToProps = (dispatch) => {
     onAddChip: (rowIndex, colIndex) =>
       dispatch({ type: actionTypes.ADD_CHIP, payload: { rowIndex, colIndex } }),
     onStartGame: (color) =>
-      dispatch({ type: actionTypes.START_GAME, payload: { color } })
+      dispatch({ type: actionTypes.START_GAME, payload: { color } }),
+    onNewGame: () => dispatch({ type: actionTypes.NEW_GAME })
   };
 };
 
