@@ -1,0 +1,18 @@
+.GameCell {
+  background-color: white;
+  margin: 1rem 1rem;
+  height: 11rem;
+  border-radius: 50%;
+
+  &__red {
+    background-color: red;
+  }
+
+  &__black {
+    background-color: black;
+  }
+
+  &:hover {
+    border: 1px solid $cell-highlight;
+  }
+}

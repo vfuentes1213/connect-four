@@ -1,10 +1,8 @@
 import React from 'react';
 
-function GameHeader() {
-  return (
-    <div className='GameHeader'>
-      </div>
-  );
-}
+const gameHeader = (props) =>
+    (<div className = 'GameHeader'><h1>{props.currentPlayer} -
+     Take Turn</h1>
+      </div>);
 
-export default GameHeader;
+export default gameHeader;

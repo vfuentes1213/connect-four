@@ -1,10 +1,31 @@
-import React from 'react';
+import React, {Component} from 'react';
+import GameCell from '../GameCell';
 
-function GameGrid() {
-  return (
-    <div className='GameGrid'>
-      </div>
-  );
-}
+class GameGrid extends Component {
+  render() {
+    // const gameCells = this.props.gridCells.map( cell => {
+    //   return (<GameCell contents = {
+    //     cell
+    //   } />)
+    const cells = [
+      [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0]
+    ];
 
-export default GameGrid;
+    const gameCellRows = cells.map((row, rowIndex) => {
+      const gameCellRow = row.map((cell, colIndex) => {
+        return (<GameCell key={
+          colIndex}/>);
+      });
+
+      return <div className='row' key={rowIndex}>{gameCellRow}</div>;
+      });
+
+    return (
+      <div className='GameGrid container'>
+        {gameCellRows}
+        </div>);
+  }
+  }
+
+  export default GameGrid;

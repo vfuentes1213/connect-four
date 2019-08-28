@@ -1,10 +1,8 @@
 import React from 'react';
 
-function GameCell() {
-  return (
-    <div className='GameCell'>
-      </div>
-  );
-}
+const gameCell = (props) => (
+  <div className='GameCell col'>
+  </div>
+);
 
-export default GameCell;
+export default gameCell;
