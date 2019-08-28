@@ -15,4 +15,12 @@
   &:hover {
     border: 1px solid $cell-highlight;
   }
+
+  &__item--red {
+    background-color: red;
+  }
+
+  &__item--black {
+    background-color: black;
+  }
 }

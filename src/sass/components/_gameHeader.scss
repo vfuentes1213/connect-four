@@ -5,4 +5,8 @@
   align-items: center;
   height: 10rem;
   margin-bottom: 1rem;
+
+  &__text {
+    text-transform: capitalize;
+  }
 }

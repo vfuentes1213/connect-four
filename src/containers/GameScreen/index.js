@@ -1,14 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import GameGrid from '../../components/GameGrid';
-import GameHeader from '../../components/GameHeader';
 
-class GameScreen extends Component {
-  render() {
-    return(<div className='GameScreen'>
-      <GameHeader currentPlayer='Red Player'/>
-     <GameGrid/>
+const gameScreen = (props) => (<div className = 'GameScreen'>
+            <GameGrid/>
     </div>);
-  }
-}
 
-export default GameScreen;
+export default gameScreen;
