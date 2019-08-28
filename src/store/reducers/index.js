@@ -38,7 +38,13 @@ const reducer = (state = initialState, action) => {
       return { ...state, board: newBoard, currentPlayer };
     case actionTypes.START_GAME:
       console.log(action.payload);
-      return { ...state };
+
+      const { playerOne, playerTwo } = { ...state };
+
+      playerOne.color = action.payload.color;
+      playerTwo.color = playerOne.color === 'red' ? 'black' : 'red';
+
+      return { ...state, playerOne, playerTwo, gameState: 'playing' };
     default:
       return state;
   }
