@@ -1,5 +1,6 @@
 import * as actionTypes from '../actions';
 import GridCell from '../../models/GridCell';
+import GridChecker from '../../controllers/GridChecker';
 
 const board = [];
 
@@ -38,21 +39,23 @@ const reducer = (state = initialState, action) => {
       });
 
       // update grid cell with current players chip color
-      newBoard[action.payload.rowIndex][action.payload.colIndex].color =
-        state[state.currentPlayer].color;
+      const updatedGridCell =
+        newBoard[action.payload.rowIndex][action.payload.colIndex];
+      updatedGridCell.color = state[state.currentPlayer].color;
 
-      // update current player
+      // update to next palyer
       const currentPlayer =
         state.currentPlayer === 'playerOne' ? 'playerTwo' : 'playerOne';
 
       // check if game has been won or if there is a draw
-      let { gameState } = { ...state };
-      let { winner } = { ...state };
+      let { gameState, winner } = { ...state };
       round++;
 
       if (round >= 8) {
-        gameState = 'end';
-        winner = 'black';
+        const gc = new GridChecker(newBoard);
+        gameState =
+          gc.checkGameHasEnded(updatedGridCell) === true ? 'end' : 'playing';
+        winner = gameState === 'end' ? state[state.currentPlayer].color : null;
       }
 
       return {
@@ -65,8 +68,6 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.START_GAME:
-      console.log(action.payload);
-
       const { playerOne, playerTwo } = { ...state };
 
       playerOne.color = action.payload.color;
@@ -76,6 +77,7 @@ const reducer = (state = initialState, action) => {
       round++;
 
       return { ...state, playerOne, playerTwo, gameState: 'playing', round };
+
     case actionTypes.NEW_GAME:
       return {
         currentPlayer: 'playerOne',
@@ -83,14 +85,7 @@ const reducer = (state = initialState, action) => {
         playerTwo: { color: 'black' },
         gameState: 'start',
         winner: null,
-        board: [
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0]
-        ],
+        board,
         round: 0
       };
     default:
